@@ -1,3 +1,3 @@
 #!/bin/bash
 
-find /matrix/MatrixLog -type f -mtime +0 -name '*.log' -execdir rm -- '{}' \;
+find /matrix/MatrixLog -type f -mmin +180 -name '*.log' -exec rm -f {} \;
