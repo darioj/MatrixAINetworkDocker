@@ -4,6 +4,9 @@ if [ -f "/matrix/man.json" ]; then
   mv /matrix/man.json /matrix/chaindata/
 fi
 
+#Start cron
+service cron start
+
 #This section creates your entrust.json file on the fly each time you start the container
 #This requires that you mount a persistent volume from your host OS to the container's /matrix/chaindata directory
 #You must have a signAccount.json file in your mounted chaindata directory
