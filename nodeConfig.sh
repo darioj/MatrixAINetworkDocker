@@ -20,8 +20,13 @@ if [ ! -d "/matrix/chaindata/gman" ]; then
   cd /matrix/ && ./gman --datadir /matrix/chaindata init /matrix/MANGenesis.json
 fi
 
+#Move picstore directory into chaindata on first run if it doesn't exist
+if [ ! -d "/matrix/chaindata/picstore" ]; then
+	mv /matrix/picstore /matrix/chaindata/
+fi
+
 #This sets the wallet address based on the mounted persistent volume
 MAN_WALLET="$(ls /matrix/chaindata/keystore/)"
 
-#This starts the node using the port and wallet variables with maxpeers of 25 to reduce I/O overhead
-cd /matrix/ && cat /matrix/gman.pass | ./gman --datadir /matrix/chaindata --networkid 1 --debug --verbosity 1 --port $MAN_PORT --manAddress $MAN_WALLET --entrust /matrix/entrust.json --gcmode archive --outputinfo 1 --syncmode full --loadsnapfile "TrieData861265"
+#This starts the node using the port and wallet variables
+cd /matrix/ && cat /matrix/gman.pass | ./gman --datadir /matrix/chaindata --networkid 1 --debug --verbosity 1 --port $MAN_PORT --manAddress $MAN_WALLET --entrust /matrix/entrust.json --gcmode archive --outputinfo 1 --syncmode full
