@@ -1,8 +1,4 @@
 #!/bin/sh
-#This is used to detect first time run and moves a file
-if [ -f "/matrix/man.json" ]; then
-  mv /matrix/man.json /matrix/chaindata/
-fi
 
 #Start cron
 service cron start
@@ -15,8 +11,9 @@ echo $PASS > /matrix/gman.pass
 echo $PASS >> /matrix/gman.pass
 cat /matrix/gman.pass | /matrix/gman --datadir /matrix/chaindata aes --aesin /matrix/chaindata/signAccount.json --aesout /matrix/entrust.json
 
-#This also detects if this is a first run and intializes the genisis block
-if [ ! -d "/matrix/chaindata/gman" ]; then
+#This is used to detect first time run. It moves a file and intializes the genisis block
+if [ -f "/matrix/man.json" ]; then
+  mv /matrix/man.json /matrix/chaindata/
   cd /matrix/ && ./gman --datadir /matrix/chaindata init /matrix/MANGenesis.json
 fi
 
